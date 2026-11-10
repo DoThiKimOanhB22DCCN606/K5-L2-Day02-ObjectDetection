@@ -8,8 +8,8 @@
 - MSSV: 2A202604034
 - Email: 26ai.oanhdtk@vinuni.edu.vn
 - Lớp: 2B-LAB-E403
-- Link repo bài làm: https://github.com/DoThiKimOanhB22DCCN606/K5-L2-DAY02-DoThiKimOanh-2A202604034-ObjectDetection/blob/main/GUIDELINE_MINI.md
-- Link Colab đã chạy: https://colab.research.google.com/github/DoThiKimOanhB22DCCN606/K5-L2-DAY02-DoThiKimOanh-2A202604034-ObjectDetection/blob/main/notebooks/day2_annotation_to_yolo.ipynb
+- Link repo bài làm: [repo bài làm](https://github.com/DoThiKimOanhB22DCCN606/K5-L2-DAY02-DoThiKimOanh-2A202604034-ObjectDetection/blob/main/GUIDELINE_MINI.md)
+- Link Colab đã chạy: [Colab](https://colab.research.google.com/github/DoThiKimOanhB22DCCN606/K5-L2-DAY02-DoThiKimOanh-2A202604034-ObjectDetection/blob/main/notebooks/day2_annotation_to_yolo.ipynb)
 
 ## 2. Schema và mini guideline
 
