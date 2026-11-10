@@ -1,27 +1,27 @@
 # Báo cáo cá nhân — Ngày 2 Object Detection
 
+Đổi tên file theo `MSSV_HoTen.md`, ví dụ `20241234_NguyenVanAn.md`. Điền kết quả thật, xóa dòng hướng dẫn khi nộp. Xem [quy định nộp](../../SUBMISSION.md).
+
 ## 1. Thông tin học viên
 
-- Họ tên: Đỗ Thị Kim Oanh
-- MSSV: B22DCCN606
-- Email: 149oanh@gmail.com
-- Lớp: K5-L2
-- Link repo bài làm: https://github.com/DoThiKimOanhB22DCCN606/K5-L2-Day02-ObjectDetection
-- Link Colab đã chạy: https://colab.research.google.com/github/DoThiKimOanhB22DCCN606/K5-L2-Day02-ObjectDetection/blob/main/notebooks/day2_annotation_to_yolo.ipynb
+- Họ tên: Đỗ Thị Kim Oanh
+- MSSV: 2A202604034
+- Email: 26ai.oanhdtk@vinuni.edu.vn
+- Lớp: 2B-LAB-E403
+- Link repo bài làm: https://github.com/DoThiKimOanhB22DCCN606/K5-L2-DAY02-DoThiKimOanh-2A202604034-ObjectDetection/blob/main/GUIDELINE_MINI.md
+- Link Colab đã chạy: https://colab.research.google.com/github/DoThiKimOanhB22DCCN606/K5-L2-DAY02-DoThiKimOanh-2A202604034-ObjectDetection/blob/main/notebooks/day2_annotation_to_yolo.ipynb
 
 ## 2. Schema và mini guideline
 
-Chi tiết guideline tham khảo tại [GUIDELINE_MINI.md](../../GUIDELINE_MINI.md).
+Dẫn tới [GUIDELINE_MINI.md](https://github.com/DoThiKimOanhB22DCCN606/K5-L2-DAY02-DoThiKimOanh-2A202604034-ObjectDetection/blob/main/GUIDELINE_MINI.md).
 
-- **Tóm tắt 3 ca mơ hồ đã quyết định:**
-  1. *Ca 1 (`drive_002` — Van vs Car)*: Xe van cỡ nhỏ nhìn từ xa ở góc nghiêng dễ nhầm với sedan/SUV. Quyết định: Gán `van` nếu thấy rõ thân hộp cao vuông vức và có cửa trượt bên hông; nếu dáng vuốt thấp hoặc không rõ thân hộp thì phân vào `car`.
-  2. *Ca 2 (`drive_001` — Xe bị che khuất >50%)*: Xe di chuyển nối đuôi nhau trên cao tốc chỉ thấy phần nóc hoặc cụm đầu xe. Quyết định: Gán `car` bao bọc sát phần nhìn thấy được (visible box) nếu nhận diện chắc chắn được hình khối nóc hoặc đầu xe con; bỏ qua các mảnh nhỏ mờ (<15%) không xác định được loại xe để tránh sinh lỗi gán thừa (FP).
-  3. *Ca 3 (`drive_009` — Bus vs Van)*: Minibus / xe khách nhỏ 12–16 chỗ có ranh giới mong manh giữa van và bus. Quyết định: Gán `van` cho các xe chở người/hàng cỡ nhỏ (≤15 chỗ) có thân ngắn và cửa trượt hông; chỉ gán `bus` khi xe có khung dài đồng nhất và thấy rõ ≥3 hàng cửa sổ hành khách liên tiếp.
-  4. *Ca bổ sung (`drive_008` — Truck vs Van / Pickup)*: Xe tải nhẹ / xe bán tải có cabin và thùng hàng. Quyết định: Gán `truck` nếu buồng lái tách biệt rõ với thùng chở hàng; gán `van` nếu thân xe liền khối dạng hộp; xe bán tải nhỏ chở người gán `car`.
-- **Cách áp dụng schema:** Áp dụng đúng 4 lớp chuẩn (`0: car, 1: truck, 2: bus, 3: van`). Vẽ box bám sát mép ngoài phần thân xe nhìn thấy được, không lấy nền đường/trời, không gộp hai xe vào một box.
-- **Phần cần giảng viên làm rõ:**
-  - Cần quy định ngưỡng kích thước pixel tối thiểu (ví dụ: tối thiểu 15–20 pixel) để thống nhất việc bỏ qua các xe quá nhỏ ở đường chân trời, giảm sai lệch FP/FN giữa các annotator.
-  - Tiêu chí phân định cụ thể giữa xe bán tải cỡ lớn (heavy-duty pickup) và xe tải nhẹ (light truck) khi chụp từ góc trước không quan sát được thùng hàng.
+## Ghi lại quyết định cho ít nhất ba ca mơ hồ
+
+| Ảnh | Tình huống | Quyết định cuối | Lý do theo schema |
+| --- | --- | --- | --- |
+| `drive_002` | Xe van cỡ nhỏ nhìn từ xa ở góc nghiêng, khó phân biệt với xe con sedan/SUV | Gán `van` vì thấy rõ thân hộp cao và có cửa trượt bên | Van có thân hộp vuông vức và cao hơn car sedan/SUV |
+| `drive_001` | Xe di chuyển nối đuôi bị che khuất >50% bởi xe phía trước, chỉ thấy phần nóc/đầu | Gán `car` vì nhận ra được nóc/đầu xe con; bỏ qua các mảnh nhỏ <15% không xác định được lớp để tránh lỗi gán thừa (FP) | Quy tắc: gán box quanh phần nhìn thấy khi đủ nhận diện lớp, không đoán phần khuất |
+| `drive_009` | Minibus / xe khách nhỏ ~12–16 chỗ có ranh giới mong manh giữa van và bus | Gán `van` cho xe chở người/hàng cỡ nhỏ (≤15 chỗ) có thân ngắn; gán `bus` khi xe có khung dài và thấy ≥3 hàng cửa sổ hành khách liên tục | Bus phân biệt bởi hàng cửa sổ dài liên tục và thân xe dài đồng nhất |
 
 ## 3. Annotation và self-QC
 
@@ -32,11 +32,9 @@ Chi tiết guideline tham khảo tại [GUIDELINE_MINI.md](../../GUIDELINE_MINI.
   - Khi rà soát phát hiện số lượng box ở hậu cảnh quá nhiều (đặc biệt các xe cực nhỏ ở đường chân trời trong `drive_001`, `drive_002`, `drive_003`), làm tăng nguy cơ FP cao so với nhãn chuẩn.
   - Một số xe minibus tại `drive_009` bị nhầm lẫn giữa `bus` và `van` do góc nhìn chéo khó đếm số hàng cửa sổ.
   - Đã rút kinh nghiệm và chuẩn hóa quy tắc: chỉ gán box khi nhận diện rõ đặc trưng lớp theo `GUIDELINE_MINI.md`.
-- Commit khóa nhãn ban đầu: `039b13c` (ghi nhận tại notebook Colab).
+- Commit khóa nhãn ban đầu: `039b13c`.
 
 ## 4. Gold QC và rework
-
-Dẫn chứng chi tiết từ file `outputs/annotation_evaluation.json`:
 
 | Chỉ số | Trước sửa | Sau sửa nếu có |
 |---|---:|---:|
@@ -49,13 +47,8 @@ Dẫn chứng chi tiết từ file `outputs/annotation_evaluation.json`:
 | mean_iou_of_matches | 0.8313 | - |
 | passed | false | - |
 
-- **Phân tích kết quả Gold QC:**
-  - Chỉ số độ bám sát hình học đạt rất tốt: `mean_iou_of_matches = 0.8313` (vượt ngưỡng yêu cầu $\ge 0.70$ của rubric), chứng tỏ các bounding box đã vẽ bám sát mép thân xe, không bị lỏng hay lệch biên.
-  - Tuy nhiên, `F1 = 0.5166` chưa đạt ngưỡng $0.80$ do số lượng `FP = 665` khá cao (Precision đạt $0.4084$). Đối chiếu từng ảnh trong `outputs/annotation_evaluation.json` cho thấy nguyên nhân:
-    - Sinh viên có xu hướng gán vét toàn bộ các xe siêu nhỏ ở đường chân trời hoặc các xe bị che khuất rất nặng ở góc rìa ảnh (ví dụ: `drive_001` học viên gán 18 box trong khi gold chỉ gán 5 xe rõ; `drive_002` học viên gán 49 box trong khi gold gán 13 box; `drive_003` học viên gán 75 box trong khi gold gán 18 box).
-    - Sự nhầm lẫn giữa `bus` và `van` ở các dòng xe minibus chở khách (như ở `drive_009`, sinh viên gán nhiều xe thành `bus` nhưng gold quy định là `van`).
-- **Quyết định rework:**
-  - Giữ nguyên bộ nhãn ban đầu để đánh giá trung thực pipeline và nộp đúng hạn, ghi nhận rõ nguyên nhân sai lệch phục vụ phân tích kỹ thuật theo đúng tinh thần học tập và nghiên cứu.
+Dẫn tới `outputs/annotation_evaluation.json`: [annotation_evaluation.json](https://github.com/DoThiKimOanhB22DCCN606/K5-L2-DAY02-DoThiKimOanh-2A202604034-ObjectDetection/blob/main/outputs/annotation_evaluation.json)
+Không có rework.
 
 ## 5. Kết quả YOLO
 
@@ -76,15 +69,9 @@ Dẫn chứng chi tiết từ file `outputs/annotation_evaluation.json`:
 | mAP50 | 0.3053 |
 | mAP50–95 | 0.2181 |
 
-Chi tiết hiệu năng theo từng lớp (trích xuất từ cell 4 của notebook):
-- `car`: Precision = 0.540, Recall = 0.894, mAP50 = 0.810, mAP50–95 = 0.552 (94 instances/10 ảnh).
-- `truck`: Precision = 0.325, Recall = 0.200, mAP50 = 0.345, mAP50–95 = 0.285 (5 instances/5 ảnh).
-- `bus`: Precision = 0.000, Recall = 0.000, mAP50 = 0.0138, mAP50–95 = 0.00962 (2 instances/2 ảnh).
-- `van`: Precision = 0.000, Recall = 0.000, mAP50 = 0.0528, mAP50–95 = 0.0259 (12 instances/6 ảnh).
-
-- **Liên kết assets tương đối:**
-  - Thư mục dự đoán trực quan: `assets/eval_predictions/visuals/`
-  - Thư mục log huấn luyện và đánh giá: `assets/yolo26_runs/vehicle_annotation/` và `assets/yolo26_runs/vehicle_eval/`
+Link tương đối: 2 folder `assets/eval_predictions/` và `assets/yolo26_runs/` 
+[report/individual/assets/eval_predictions](https://github.com/DoThiKimOanhB22DCCN606/K5-L2-DAY02-DoThiKimOanh-2A202604034-ObjectDetection/tree/main/report/individual/assets/eval_predictions)
+[report/individual/assets/yolo26_runs](https://github.com/DoThiKimOanhB22DCCN606/K5-L2-DAY02-DoThiKimOanh-2A202604034-ObjectDetection/tree/main/report/individual/assets/yolo26_runs)
 
 - **Phân tích ảnh trực quan cụ thể:**
   - **Ảnh `drive_051.jpg`** (`assets/eval_predictions/visuals/drive_051.jpg`): Ground truth thực tế có 1 xe `bus` (`dataset/labels/eval/drive_051.txt` dòng 4: `2 0.828125 0.130469 0.110156 0.201563`). Tuy nhiên, kết quả dự đoán của mô hình là `9 cars, 1 van` $\rightarrow$ đối tượng xe bus duy nhất bị mô hình bỏ sót hoàn toàn (FN) hoặc gán nhầm sang van/car.
@@ -155,3 +142,4 @@ Chi tiết hiệu năng theo từng lớp (trích xuất từ cell 4 của noteb
   - Tài liệu Ultralytics YOLO26 documentation: https://docs.ultralytics.com
   - Hướng dẫn thực hành và quy định môn học trong Level 2 Lab Day 02 Object Detection.
   - Không sử dụng mật khẩu, API token hay tài liệu không được phép của giảng viên.
+
