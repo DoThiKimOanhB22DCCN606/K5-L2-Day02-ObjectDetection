@@ -22,6 +22,12 @@
 
 | Ảnh | Tình huống | Quyết định cuối | Lý do theo schema |
 | --- | --- | --- | --- |
-| `drive_...` | | | |
-| `drive_...` | | | |
-| `drive_...` | | | |
+| `drive_002` | Xe van cỡ nhỏ nhìn từ xa ở góc nghiêng, khó phân biệt với xe con sedan/SUV | Gán `van` vì thấy rõ thân hộp cao và có cửa trượt bên | Van có thân hộp vuông vức và cao hơn car sedan/SUV |
+| `drive_001` | Xe di chuyển nối đuôi bị che khuất >50% bởi xe phía trước, chỉ thấy phần nóc/đầu | Gán `car` vì nhận ra được nóc/đầu xe con; bỏ qua các mảnh nhỏ <15% không xác định được lớp để tránh lỗi gán thừa (FP) | Quy tắc: gán box quanh phần nhìn thấy khi đủ nhận diện lớp, không đoán phần khuất |
+| `drive_009` | Minibus / xe khách nhỏ ~12–16 chỗ có ranh giới mong manh giữa van và bus | Gán `van` cho xe chở người/hàng cỡ nhỏ (≤15 chỗ) có thân ngắn; gán `bus` khi xe có khung dài và thấy ≥3 hàng cửa sổ hành khách liên tục | Bus phân biệt bởi hàng cửa sổ dài liên tục và thân xe dài đồng nhất |
+
+## Phần cần giảng viên làm rõ
+
+1. **Ngưỡng kích thước tối thiểu (pixel width/height):** Cần quy định kích thước ngưỡng (ví dụ: tối thiểu 15–20 pixel) để thống nhất việc bỏ qua các xe quá nhỏ ở đường chân trời, tránh tạo ra nhãn nhiễu hoặc sai lệch FP/FN lớn giữa các người gán.
+2. **Xe bán tải cỡ lớn (Heavy-duty pickup) vs Xe tải nhẹ (Light truck):** Khi chụp trực diện từ phía trước hoặc bị che khuất đuôi xe không thấy thùng chở hàng, cần làm rõ quy tắc ưu tiên phân về `car` hay `truck`.
+
