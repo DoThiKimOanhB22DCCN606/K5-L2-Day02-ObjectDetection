@@ -1,7 +1,5 @@
 # Báo cáo cá nhân — Ngày 2 Object Detection
 
-Đổi tên file theo `MSSV_HoTen.md`, ví dụ `20241234_NguyenVanAn.md`. Điền kết quả thật, xóa dòng hướng dẫn khi nộp. Xem [quy định nộp](../../SUBMISSION.md).
-
 ## 1. Thông tin học viên
 
 - Họ tên: Đỗ Thị Kim Oanh
